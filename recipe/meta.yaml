@@ -21,11 +21,10 @@ requirements:
     - pip
   run:
     - python >=3.6
-    - setuptools
-    - numpy >=1.13
-    - numba ==0.46
-    - llvmlite ==0.30
-    - scikit-learn >=0.19
+    - numpy >=1.17
+    - numba >=0.51.2
+    - llvmlite >=0.30
+    - scikit-learn >=0.18
     - scipy >=1.0
 
 test:
