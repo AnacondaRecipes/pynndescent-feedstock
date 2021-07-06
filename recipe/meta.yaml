@@ -19,6 +19,7 @@ requirements:
     - python >=3.6
     - setuptools
     - pip
+    - wheel
   run:
     - python >=3.6
     - numpy >=1.17
@@ -26,6 +27,7 @@ requirements:
     - llvmlite >=0.30
     - scikit-learn >=0.18
     - scipy >=1.0
+    - joblib >=0.11
 
 test:
   requires:
@@ -49,6 +51,7 @@ about:
     Nearest Neighbor Descent for k-neighbor-graph construction and 
     approximate nearest neighbor search.
   dev_url: https://github.com/lmcinnes/pynndescent
+  doc_url: https://pynndescent.readthedocs.io/en/latest/
 
 extra:
   recipe-maintainers:
