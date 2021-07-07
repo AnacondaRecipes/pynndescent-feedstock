@@ -1,5 +1,5 @@
 {% set name = "pynndescent" %}
-{% set version = "0.5.2" %}
+{% set version = "0.5.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: d9fd22210b8d64368376ff392e876fb72fe3cda282396cfa6a59440ab6600771
+  sha256: 221124cbad8e3cf3ed421a4089d80ac5a29d3215e76cb49effc1df887533d2a8
 
 build:
   number: 0
@@ -19,6 +19,7 @@ requirements:
     - python >=3.6
     - setuptools
     - pip
+    - wheel
   run:
     - python >=3.6
     - numpy >=1.17
@@ -26,6 +27,7 @@ requirements:
     - llvmlite >=0.30
     - scikit-learn >=0.18
     - scipy >=1.0
+    - joblib >=0.11
 
 test:
   requires:
@@ -49,6 +51,7 @@ about:
     Nearest Neighbor Descent for k-neighbor-graph construction and 
     approximate nearest neighbor search.
   dev_url: https://github.com/lmcinnes/pynndescent
+  doc_url: https://pynndescent.readthedocs.io/en/latest/
 
 extra:
   recipe-maintainers:
