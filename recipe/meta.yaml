@@ -35,7 +35,6 @@ test:
   imports:
     - pynndescent
   requires:
-    - python
     - pip
   commands:
     - pip check
