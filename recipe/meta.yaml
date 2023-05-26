@@ -1,5 +1,5 @@
 {% set name = "pynndescent" %}
-{% set version = "0.5.4" %}
+{% set version = "0.5.10" %}
 
 package:
   name: {{ name|lower }}
@@ -7,44 +7,44 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 221124cbad8e3cf3ed421a4089d80ac5a29d3215e76cb49effc1df887533d2a8
+  sha256: 5d5dc683c03ef55fe3ddf693859720ca18f85c6e6e5bb0b4f14870278d5288ad
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<36]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python >=3.6
-    - setuptools
+    - python
     - pip
+    - setuptools
     - wheel
   run:
-    - python >=3.6
-    - numpy >=1.17
-    - numba >=0.51.2
+    - python
+    - importlib-metadata >=4.8.1  # [py<38]
+    - joblib >=0.11
     - llvmlite >=0.30
+    - numba >=0.51.2
+    - numpy >=1.17
     - scikit-learn >=0.18
     - scipy >=1.0
-    - joblib >=0.11
 
 test:
-  requires:
-    - python
-    - setuptools
-  commands:
-    - python -c "import pkg_resources; pkg_resources.require('pynndescent')"
   imports:
     - pynndescent
+  requires:
+    - python
+    - pip
+  commands:
+    - pip check
 
 about:
-  home: http://github.com/lmcinnes/pynndescent
+  home: https://github.com/lmcinnes/pynndescent
   license: BSD-2-Clause
   license_family: BSD
   license_file: {{ environ["RECIPE_DIR"] }}/LICENSE
   summary: Simple fast approximate nearest neighbor search
-
   description: |
     A Python nearest neighbor descent for approximate nearest neighbors. 
     This is a relatively straightforward python implementation of 
