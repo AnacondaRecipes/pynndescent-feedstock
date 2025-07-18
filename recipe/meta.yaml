@@ -10,9 +10,10 @@ source:
   sha256: 221124cbad8e3cf3ed421a4089d80ac5a29d3215e76cb49effc1df887533d2a8
 
 build:
-  number: 0
+  number: 1
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: True  # [py<36]
 
 requirements:
   host:
@@ -22,7 +23,8 @@ requirements:
     - wheel
   run:
     - python >=3.6
-    - numpy >=1.17
+    # # AttributeError: `np.infty` was removed in the NumPy 2.0 release. Use `np.inf` instead.
+    - numpy >=1.17,<2
     - numba >=0.51.2
     - llvmlite >=0.30
     - scikit-learn >=0.18
@@ -51,7 +53,7 @@ about:
     Nearest Neighbor Descent for k-neighbor-graph construction and 
     approximate nearest neighbor search.
   dev_url: https://github.com/lmcinnes/pynndescent
-  doc_url: https://pynndescent.readthedocs.io/en/latest/
+  doc_url: https://pynndescent.readthedocs.io
 
 extra:
   recipe-maintainers:
