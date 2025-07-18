@@ -10,10 +10,9 @@ source:
   sha256: 5d5dc683c03ef55fe3ddf693859720ca18f85c6e6e5bb0b4f14870278d5288ad
 
 build:
-  number: 0
-  # numba and llvmlite aren't available on s390x
-  skip: true  # [py<37 or s390x]
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<37]
 
 requirements:
   host:
@@ -27,7 +26,8 @@ requirements:
     - joblib >=0.11
     - llvmlite >=0.34
     - numba >=0.51.2
-    - numpy >=1.17
+    # AttributeError: `np.infty` was removed in the NumPy 2.0 release. Use `np.inf` instead.
+    - numpy >=1.17,<2
     - scikit-learn >=0.18
     - scipy >=1.0
 
@@ -51,7 +51,7 @@ about:
     Nearest Neighbor Descent for k-neighbor-graph construction and 
     approximate nearest neighbor search.
   dev_url: https://github.com/lmcinnes/pynndescent
-  doc_url: https://pynndescent.readthedocs.io/en/latest/
+  doc_url: https://pynndescent.readthedocs.io
 
 extra:
   recipe-maintainers:
