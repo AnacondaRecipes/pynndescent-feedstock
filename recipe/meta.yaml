@@ -32,21 +32,19 @@ requirements:
     - joblib >=0.11
 
 test:
-  requires:
-    - python
-    - setuptools
-  commands:
-    - python -c "import pkg_resources; pkg_resources.require('pynndescent')"
   imports:
     - pynndescent
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
-  home: http://github.com/lmcinnes/pynndescent
+  home: https://github.com/lmcinnes/pynndescent
   license: BSD-2-Clause
   license_family: BSD
   license_file: {{ environ["RECIPE_DIR"] }}/LICENSE
   summary: Simple fast approximate nearest neighbor search
-
   description: |
     A Python nearest neighbor descent for approximate nearest neighbors. 
     This is a relatively straightforward python implementation of 
