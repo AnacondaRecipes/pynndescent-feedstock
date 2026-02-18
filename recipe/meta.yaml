@@ -1,13 +1,13 @@
 {% set name = "pynndescent" %}
-{% set version = "0.5.13" %}
+{% set version = "0.6.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: d74254c0ee0a1eeec84597d5fe89fedcf778593eeabe32c2f97412934a9800fb
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7ffde0fb5b400741e055a9f7d377e3702e02250616834231f6c209e39aac24f5
 
 build:
   number: 0
@@ -17,14 +17,13 @@ requirements:
   host:
     - python
     - pip
-    - setuptools
-    - wheel
+    - setuptools >=61.2
   run:
     - python
     - importlib-metadata >=4.8.1  # [py<38]
     - joblib >=0.11
-    - llvmlite >=0.30
-    - numba >=0.51.2
+    - llvmlite >=0.38
+    - numba >=0.55.0
     - numpy >=1.17
     - scikit-learn >=0.18
     - scipy >=1.0
@@ -55,9 +54,9 @@ about:
   license_file: LICENSE
   summary: Simple fast approximate nearest neighbor search
   description: |
-    A Python nearest neighbor descent for approximate nearest neighbors. 
-    This is a relatively straightforward python implementation of 
-    Nearest Neighbor Descent for k-neighbor-graph construction and 
+    A Python nearest neighbor descent for approximate nearest neighbors.
+    This is a relatively straightforward python implementation of
+    Nearest Neighbor Descent for k-neighbor-graph construction and
     approximate nearest neighbor search.
   dev_url: https://github.com/lmcinnes/pynndescent
   doc_url: https://pynndescent.readthedocs.io/en/latest/
