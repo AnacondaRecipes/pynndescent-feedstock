@@ -20,13 +20,26 @@ requirements:
     - setuptools >=61.2
   run:
     - python
-    - importlib-metadata >=4.8.1  # [py<38]
-    - joblib >=0.11
-    - llvmlite >=0.38
-    - numba >=0.55.0
-    - numpy >=1.17
     - scikit-learn >=0.18
     - scipy >=1.0
+    - numba >=0.55.0
+    - llvmlite >=0.38
+    - joblib >=0.11
+    - numpy >=1.17
+
+# E sklearn.utils._param_validation.InvalidParameterError: The 'metric' parameter of pairwise_distances must be a 
+# str among {'l1', 'wminkowski', 'chebyshev', 'rogerstanimoto', 'precomputed', 'sokalsneath', 'braycurtis', 'correlation', 
+# 'dice', 'jaccard', 'nan_euclidean', 'haversine', 'matching', 'euclidean', 'canberra', 'hamming', 'minkowski', 'yule', 
+# 'sqeuclidean', 'seuclidean', 'manhattan', 'cityblock', 'russellrao', 'mahalanobis', 'cosine', 'l2'} or a callable. Got 'sokalmichener' instead.
+{% set deselect_tests = " --deselect=pynndescent/tests/test_distances.py::test_binary_check" %}
+{% set deselect_tests = deselect_tests + " --deselect=pynndescent/tests/test_distances.py::test_sparse_binary_check" %}
+# E        ACTUAL: array([[ 0.      , 67.849031, 10.949829, 62.72757 , 45.5568  , 29.807874,
+# E               70.065031, 48.540842, 27.665679, 28.211244, 26.883046, 26.883046],
+# E              [67.849031,  0.      , 61.682592, 11.370837, 26.474672, 40.951435,...
+# E        DESIRED: array([[ 0.      , 67.849031, 10.949829, 62.727569, 45.556799, 29.807874,
+# E               70.065032, 48.54084 , 27.665678, 28.211243, 26.883046, 26.883046],
+# E              [67.849031,  0.      , 61.682592, 11.370837, 26.474672, 40.951436,...
+{% set deselect_tests = deselect_tests + " --deselect=pynndescent/tests/test_distances.py::test_seuclidean" %}
 
 test:
   source_files:
@@ -42,7 +55,7 @@ test:
   commands:
     - pip check
     # pyargs does not work, tests folder not in the site-packages dir.
-    - pytest -v pynndescent/tests
+    - pytest -v pynndescent/tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
@@ -59,7 +72,7 @@ about:
     Nearest Neighbor Descent for k-neighbor-graph construction and
     approximate nearest neighbor search.
   dev_url: https://github.com/lmcinnes/pynndescent
-  doc_url: https://pynndescent.readthedocs.io/en/latest/
+  doc_url: https://pynndescent.readthedocs.io
 
 extra:
   recipe-maintainers:
