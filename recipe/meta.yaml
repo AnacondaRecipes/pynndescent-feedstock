@@ -27,20 +27,6 @@ requirements:
     - joblib >=0.11
     - numpy >=1.17
 
-# E sklearn.utils._param_validation.InvalidParameterError: The 'metric' parameter of pairwise_distances must be a 
-# str among {'l1', 'wminkowski', 'chebyshev', 'rogerstanimoto', 'precomputed', 'sokalsneath', 'braycurtis', 'correlation', 
-# 'dice', 'jaccard', 'nan_euclidean', 'haversine', 'matching', 'euclidean', 'canberra', 'hamming', 'minkowski', 'yule', 
-# 'sqeuclidean', 'seuclidean', 'manhattan', 'cityblock', 'russellrao', 'mahalanobis', 'cosine', 'l2'} or a callable. Got 'sokalmichener' instead.
-{% set deselect_tests = " --deselect=pynndescent/tests/test_distances.py::test_binary_check" %}
-{% set deselect_tests = deselect_tests + " --deselect=pynndescent/tests/test_distances.py::test_sparse_binary_check" %}
-# E        ACTUAL: array([[ 0.      , 67.849031, 10.949829, 62.72757 , 45.5568  , 29.807874,
-# E               70.065031, 48.540842, 27.665679, 28.211244, 26.883046, 26.883046],
-# E              [67.849031,  0.      , 61.682592, 11.370837, 26.474672, 40.951435,...
-# E        DESIRED: array([[ 0.      , 67.849031, 10.949829, 62.727569, 45.556799, 29.807874,
-# E               70.065032, 48.54084 , 27.665678, 28.211243, 26.883046, 26.883046],
-# E              [67.849031,  0.      , 61.682592, 11.370837, 26.474672, 40.951436,...
-{% set deselect_tests = deselect_tests + " --deselect=pynndescent/tests/test_distances.py::test_seuclidean" %}
-
 test:
   source_files:
     - pynndescent/tests
@@ -55,10 +41,13 @@ test:
   commands:
     - pip check
     # pyargs does not work, tests folder not in the site-packages dir.
-    - pytest -v pynndescent/tests {{ deselect_tests }}
+    - pytest -v pynndescent/tests
   requires:
     - pip
     - pytest
+    # [TODO]: Check if needed during next version bump
+    # FIX for unit tests: The sokalmichener metric is deprecated since SciPy 1.15.0 and will be removed in SciPy 1.17.0
+    - scipy <1.17
 
 about:
   home: https://github.com/lmcinnes/pynndescent
