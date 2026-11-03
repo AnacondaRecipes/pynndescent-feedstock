@@ -21,6 +21,10 @@ requirements:
     - setuptools >=61.2
   run:
     - python
+    # keep consistent with upstream:
+    # https://github.com/lmcinnes/pynndescent/blob/release-0.7.0/requirements.txt#L2
+    # also numpy used in code, but not present in pyproject.toml.
+    - numpy >=1.17
     - scikit-learn >=0.18
     - scipy >=1.0
     - numba >=0.55.0
