@@ -26,7 +26,6 @@ requirements:
     - numba >=0.55.0
     - llvmlite >=0.38
     - joblib >=0.11
-    - numpy >=1.17
 
 test:
   source_files:
