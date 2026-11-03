@@ -1,16 +1,17 @@
 {% set name = "pynndescent" %}
-{% set version = "0.6.0" %}
+{% set version = "0.7.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7ffde0fb5b400741e055a9f7d377e3702e02250616834231f6c209e39aac24f5
+  sha256: 54f097a003bfdb917225e1bcf55c4027e283a37a2b5e3cae4b4aaf21197f6d1c
 
 build:
   number: 0
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -20,12 +21,15 @@ requirements:
     - setuptools >=61.2
   run:
     - python
+    # keep consistent with upstream:
+    # https://github.com/lmcinnes/pynndescent/blob/release-0.7.0/requirements.txt#L2
+    # also numpy used in code, but not present in pyproject.toml.
+    - numpy >=1.17
     - scikit-learn >=0.18
     - scipy >=1.0
     - numba >=0.55.0
     - llvmlite >=0.38
     - joblib >=0.11
-    - numpy >=1.17
 
 test:
   source_files:
@@ -33,21 +37,25 @@ test:
   imports:
     - pynndescent
     - pynndescent.distances
+    - pynndescent.graph_utils
+    - pynndescent.hub_tree
+    - pynndescent.hybrid_forest
+    - pynndescent.kernels
     - pynndescent.optimal_transport
+    - pynndescent.pynndescent_
     - pynndescent.rp_trees
+    - pynndescent.search
+    - pynndescent.search_graph
     - pynndescent.sparse
     - pynndescent.sparse_nndescent
     - pynndescent.utils
   commands:
     - pip check
     # pyargs does not work, tests folder not in the site-packages dir.
-    - pytest -v pynndescent/tests
+    - pytest -vv pynndescent/tests
   requires:
     - pip
     - pytest
-    # [TODO]: Check if needed during next version bump
-    # FIX for unit tests: The sokalmichener metric is deprecated since SciPy 1.15.0 and will be removed in SciPy 1.17.0
-    - scipy <1.17
 
 about:
   home: https://github.com/lmcinnes/pynndescent
